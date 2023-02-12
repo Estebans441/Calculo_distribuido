@@ -11,7 +11,9 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         // Crear un socket y conectarse al servidor central de cálculo
         Socket centralServer = new Socket(centralServerIp, 12345);
-        System.out.println("Conexión establecida con el servidor central de cálculo");
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("Conexión establecida con el servidor central de cálculo " + centralServer.getInetAddress());
+        System.out.println("-----------------------------------------------------------------------");
 
         // Pedir al usuario que introduzca los datos
         System.out.print("Introduce el tamaño del rango del problema: ");

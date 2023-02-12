@@ -10,12 +10,16 @@ public class CentralServer {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         // Crear un servidor socket en el puerto 12345
         ServerSocket server = new ServerSocket(12345);
+        System.out.println("----------------------------------------------");
         System.out.println("Servidor central de cálculo en ejecución");
+        System.out.println("IP: " + server.getInetAddress());
+        System.out.println("Puerto: " + server.getLocalPort());
+        System.out.println("----------------------------------------------");
 
         while (true) {
             // Aceptar la conexión de un cliente
             Socket client = server.accept();
-            System.out.println("Conexión establecida con el cliente");
+            System.out.println("  > Conexión establecida con el cliente " + client.getInetAddress());
 
             // Recibir la matriz del cliente
             ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
@@ -39,7 +43,7 @@ public class CentralServer {
                 var += ois2.readFloat();
                 operationServer.close();
             }
-            System.out.println("Respuesta: " + String.valueOf(var));
+            System.out.println("        - Respuesta: " + String.valueOf(var));
 
             // Enviar la respuesta al cliente
             ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());

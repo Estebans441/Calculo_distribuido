@@ -14,12 +14,16 @@ public class OperationServer {
         int serverNum = Integer.parseInt(args[0]);
         // Crear un servidor socket en el puerto 22222 o 22223
         ServerSocket server = new ServerSocket(22222 + serverNum);
+        System.out.println("----------------------------------------------");
         System.out.println("Servidor de operación " + (serverNum + 1) + " en ejecución");
+        System.out.println("IP: " + server.getInetAddress());
+        System.out.println("Puerto: " + server.getLocalPort());
+        System.out.println("----------------------------------------------");
 
         while (true) {
             // Aceptar la conexión del servidor central de cálculo
             Socket centralServer = server.accept();
-            System.out.println("Conexión establecida con el servidor central de cálculo");
+            System.out.println("  > Conexión establecida con el servidor central de cálculo " + centralServer.getInetAddress());
 
             // Recibir la matriz y la parte de la operacion a realizar
             ObjectInputStream ois = new ObjectInputStream(centralServer.getInputStream());
@@ -30,7 +34,8 @@ public class OperationServer {
             float res;
             if (op == 0) res = op1(data);
             else res = op2(data);
-            System.out.println("Respuesta de una parte: " + String.valueOf(res));
+            System.out.println("        - Respuesta de una parte: " + String.valueOf(res));
+            System.out.println();
             // Enviar la respuesta al servidor central de cálculo
             Socket centralServer2 = new Socket(centralServerIp, 12345);
             ObjectOutputStream oos = new ObjectOutputStream(centralServer2.getOutputStream());
