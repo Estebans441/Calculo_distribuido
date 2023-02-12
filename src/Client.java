@@ -5,33 +5,36 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
+    private static String centralServerIp = "10.43.100.191";
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
-
         // Crear un socket y conectarse al servidor central de cálculo
-        Socket centralServer = new Socket("localhost", 12345);
+        Socket centralServer = new Socket(centralServerIp, 12345);
         System.out.println("Conexión establecida con el servidor central de cálculo");
 
-        // Pedir al usuario que introduzca el arreglo de enteros
-        System.out.print("Introduce el tamaño del arreglo: ");
+        // Pedir al usuario que introduzca los datos
+        System.out.print("Introduce el tamaño del rango del problema: ");
         int size = scanner.nextInt();
-        int[] array = new int[size];
+        float[][] data = new float[size][2];
         for (int i = 0; i < size; i++) {
-            System.out.print("Introduce el elemento " + (i + 1) + ": ");
-            array[i] = scanner.nextInt();
+            System.out.print("Variable aleatoria " + (i + 1) + ": ");
+            data[i][0] = scanner.nextFloat();
+            System.out.print("f(x): ");
+            data[i][1] = scanner.nextFloat();
         }
 
-        // Enviar el arreglo al servidor central de cálculo
+        // Enviar la matriz al servidor central de cálculo
         ObjectOutputStream oos = new ObjectOutputStream(centralServer.getOutputStream());
-        oos.writeObject(array);
+        oos.writeObject(data);
         oos.flush();
 
         // Recibir la respuesta del servidor central de cálculo
         ObjectInputStream ois = new ObjectInputStream(centralServer.getInputStream());
-        int sum = ois.readInt();
+        float var = ois.readFloat();
 
-        // Mostrar la suma al usuario
-        System.out.println("La suma es: " + sum);
+        // Mostrar la respuesta al usuario
+        System.out.println("La varianza es: " + var);
 
         // Cerrar el socket
         centralServer.close();

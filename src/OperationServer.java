@@ -4,7 +4,11 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import static java.lang.Math.pow;
+
 public class OperationServer {
+    private static String centralServerIp = "10.43.100.191";
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         // Obtener el número de servidor de operación
         int serverNum = Integer.parseInt(args[0]);
@@ -17,24 +21,40 @@ public class OperationServer {
             Socket centralServer = server.accept();
             System.out.println("Conexión establecida con el servidor central de cálculo");
 
-            // Recibir el arreglo y los índices desde el servidor central de cálculo
+            // Recibir la matriz y la parte de la operacion a realizar
             ObjectInputStream ois = new ObjectInputStream(centralServer.getInputStream());
-            int[] array = (int[]) ois.readObject();
-            int start = ois.readInt();
-            int size = ois.readInt();
+            float[][] data = (float[][]) ois.readObject();
+            int op = ois.readInt();
 
-            // Calcular la suma de la mitad del arreglo
-            int sum = 0;
-            for (int i = start; i < start + size; i++) {
-                sum += array[i];
-            }
-
+            // Calcular la parte correspondiente de la operacion
+            float res;
+            if (op == 0) res = op1(data);
+            else res = op2(data);
+            System.out.println("Respuesta de una parte: " + String.valueOf(res));
             // Enviar la respuesta al servidor central de cálculo
-            Socket centralServer2 = new Socket("localhost", 12345);
+            Socket centralServer2 = new Socket(centralServerIp, 12345);
             ObjectOutputStream oos = new ObjectOutputStream(centralServer2.getOutputStream());
-            oos.writeInt(sum);
+            oos.writeFloat(res);
             oos.flush();
             centralServer2.close();
         }
+    }
+
+    //Parte 1 de la operacion de varianza en la que se calcula el valor esperado de x al cuadrado
+    public static float op1(float[][] data) {
+        float res = 0;
+        for (int i = 0; i < data.length; i++) {
+            res += pow(data[i][0], 2) * data[i][1];
+        }
+        return res;
+    }
+
+    //Parte 2 de la operacion de varianza en la que se calcula el valor esperado al cuadrado
+    public static float op2(float[][] data) {
+        float res = 0;
+        for (int i = 0; i < data.length; i++)
+            res += data[i][0] * data[i][1];
+        res = (float) (pow(res, 2) * -1);
+        return res;
     }
 }
