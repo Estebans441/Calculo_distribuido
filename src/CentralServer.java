@@ -44,6 +44,7 @@ public class CentralServer {
                 operationServer.close();
             }
             System.out.println("        - Respuesta: " + String.valueOf(var));
+            System.out.println();
 
             // Enviar la respuesta al cliente
             ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
