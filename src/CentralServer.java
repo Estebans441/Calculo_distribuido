@@ -13,7 +13,7 @@ public class CentralServer {
         ServerSocket server = new ServerSocket(12345);
         System.out.println("----------------------------------------------");
         System.out.println("Servidor central de cálculo en ejecución");
-        System.out.println("IP: " + InetAddress.getLocalHost());
+        System.out.println("IP: " + InetAddress.getLocalHost().getHostAddress());
         System.out.println("Puerto: " + server.getLocalPort());
         System.out.println("----------------------------------------------");
 
