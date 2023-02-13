@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,7 +17,7 @@ public class OperationServer {
         ServerSocket server = new ServerSocket(22222 + serverNum);
         System.out.println("----------------------------------------------");
         System.out.println("Servidor de operación " + (serverNum + 1) + " en ejecución");
-        System.out.println("IP: " + server.getInetAddress());
+        System.out.println("IP: " + InetAddress.getLocalHost());
         System.out.println("Puerto: " + server.getLocalPort());
         System.out.println("----------------------------------------------");
 
