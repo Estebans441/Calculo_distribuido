@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class CentralServer {
-    private static String[] opServersIp = {"10.43.100.191", "10.43.100.191"};
+    private static String[] opServersIp = {"10.43.100.184", "10.43.100.192"};
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         // Crear un servidor socket en el puerto 12345

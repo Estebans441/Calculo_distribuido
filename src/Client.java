@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-    private static String centralServerIp = "10.43.100.191";
+    private static String centralServerIp = "10.43.100.187";
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);

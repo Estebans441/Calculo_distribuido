@@ -8,7 +8,7 @@ import java.net.Socket;
 import static java.lang.Math.pow;
 
 public class OperationServer {
-    private static String centralServerIp = "10.43.100.191";
+    private static String centralServerIp = "10.43.100.187";
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         // Obtener el número de servidor de operación
